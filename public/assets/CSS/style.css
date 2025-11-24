@@ -1,0 +1,237 @@
+      /* ========================================================= */
+      /* CSS DE ESTRUCTURA Y FUNCIONALIDAD DEL CALENDARIO */
+      /* ========================================================= */
+      body { 
+          font-family: Arial, sans-serif; 
+          display: flex; 
+          flex-direction: column; 
+          min-height: 100vh; 
+          margin: 0; 
+          padding-top: 50px;
+      }
+      .topbar { 
+          background-color: #333; 
+          color: white; 
+          padding: 10px 20px; 
+          position: fixed; 
+          width: 100%; 
+          top: 0; 
+          z-index: 100;
+          display: grid; 
+          grid-template-columns: 1fr auto 1fr; 
+      }
+      .topbar .brand {text-align: left; font-weight: bold; font-size: 1.2em;}
+      .date-control {
+          display: flex; 
+          align-items: center; 
+          justify-content: center; 
+          position: relative;
+      }
+      
+      .date-display-container {
+          position: relative; 
+          height: 100%;
+          display: flex;
+          align-items: center;
+          visibility: hidden; 
+          width: 0;
+          height: 0;
+      }
+      #date-input-hidden {
+          position: absolute; 
+          opacity: 0; 
+          height: 100%;
+          width: 100%;
+          top: 0;
+          left: 0;
+          cursor: pointer;
+          z-index: 101; 
+      }
+      
+      .topbar .nav {display: flex; justify-content: flex-end; align-items: center;}
+      main { display: flex; flex-grow: 1; width: 100%; }
+      #sidebar { 
+          width: 250px; 
+          padding: 20px; 
+          border-right: 1px solid #ccc; 
+          background-color: #f8f8f8; 
+          flex-shrink: 0;
+      }
+      #calendario-vista { flex-grow: 1; padding: 20px; overflow-x: auto;}
+      table { width: 100%; border-collapse: collapse; table-layout: fixed; min-width: 700px; }
+      th, td { border: 1px solid #ccc; padding: 10px; text-align: center; height: 100px; vertical-align: top; }
+      .resaltado { font-weight: bold; color: #0056b3; } 
+      .visita { background-color: #d4edda; border-radius: 4px; padding: 5px; margin-bottom: 5px; font-size: 0.8em; text-align: left; overflow: hidden; }
+      .error-validacion { background-color: #f8d7da; color: #721c24; padding: 10px; margin-top: 10px; margin-bottom: 20px; border-radius: 5px; display: none; }
+      .footer { background-color: #eee; padding: 10px; text-align: center; width: 100%; border-top: 1px solid #ccc; }
+      
+      /* --- ESTILOS DE NAVEGACIÓN SEMANAL --- */
+      #calendar-controls {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 10px 15px;
+          margin-bottom: 15px;
+          background-color: #e9ecef;
+          border: 1px solid #ced4da;
+          border-radius: 4px;
+      }
+      #calendar-controls .date-arrow {
+          cursor: pointer; font-size: 2em; user-select: none; color: #333; transition: color 0.1s;
+      }
+      #calendar-controls .date-arrow:hover {
+          color: #007bff;
+      }
+      #calendar-controls .current-week-range {
+          font-size: 1.3em; font-weight: bold; color: #333;
+      }
+      th .day-number {
+          font-size: 1.2em; font-weight: bold; display: block;
+      }
+
+      /* ========================================================= */
+      /* CSS AISLADO PARA EL FORMULARIO Y LISTADO (DERECHA) */
+      /* ========================================================= */
+      #programacion-y-listado {
+          display: flex;
+          gap: 20px; /* Espacio entre el formulario y el listado */
+          margin-bottom: 20px;
+          padding: 15px;
+          border: 1px solid #ccc;
+          border-radius: 6px;
+          background-color: #fff;
+      }
+      
+      #programacion-y-listado h2 {
+          margin-top: 0;
+          font-size: 1.5em;
+          border-bottom: 2px solid #007bff;
+          padding-bottom: 5px;
+      }
+      
+      /* Contenedor del Formulario (ocupa la primera columna) */
+      #form-visita-col {
+          flex: 0 0 350px; /* Fijo para el formulario */
+      }
+
+      /* Contenedor del Listado (ocupa el espacio restante) */
+      #listado-visitas-col {
+          flex-grow: 1; 
+          overflow-x: auto;
+      }
+
+      /* Estilos para el formulario */
+      .form-visita-group { margin-bottom: 10px; }
+      .form-visita-label { 
+          display: block; 
+          margin-top: 5px; 
+          font-weight: bold; 
+          font-size: 0.9em;
+      }
+      .form-visita-control { 
+          padding: 8px; 
+          width: 100%; 
+          box-sizing: border-box; 
+          margin-top: 4px; 
+          border: 1px solid #ced4da; 
+          border-radius: 4px;
+      }
+      .form-visita-button { 
+          margin-top: 15px; 
+          padding: 10px; 
+          width: 100%; 
+          background-color: #28a745; 
+          color: white; 
+          border: none; 
+          border-radius: 4px; 
+          cursor: pointer; 
+          font-size: 1em;
+          transition: background-color 0.2s;
+      }
+
+      /* Estilos para la tabla de listado de visitas */
+      .form-visita-table { 
+          width: 100%; 
+          min-width: 400px; /* Mínimo para que se vea bien la tabla */
+          border-collapse: collapse; 
+          font-size: 0.85em; 
+      }
+      .form-visita-table th, .form-visita-table td { 
+          border: 1px solid #dee2e6; 
+          padding: 8px; 
+          text-align: left; 
+      }
+      .form-visita-table thead th { 
+          background-color: #007bff; 
+          color: white; 
+          text-align: center;
+      }
+      .form-visita-table tbody td {
+          text-align: center;
+      }
+      /* ... (Sección anterior: .form-actions) ... */
+
+/* Alinea los botones a la derecha del contenedor #form-visita-col */
+.form-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    /* --- CAMBIO CLAVE --- */
+    justify-content: flex-end; /* Mueve los elementos hijos a la derecha */
+    width: 100%; /* Asegura que el contenedor ocupe el ancho completo */
+}
+
+/* Base de botones */
+.form-visita-button { 
+    padding: 10px 15px; /* Aumentar el padding horizontal para estética */
+    border: none; 
+    border-radius: 4px; 
+    cursor: pointer; 
+    font-size: 1em;
+    transition: background-color 0.2s;
+    /* --- CAMBIO CLAVE --- */
+    width: auto; /* Permite que el botón se ajuste al tamaño del texto */
+    flex-grow: 0; /* Evita que el botón se estire */
+}
+
+/* La clase full-width se puede mantener para el botón Cancelar si quieres separarlo */
+.form-visita-button.full-width {
+    width: 100%;
+    flex-grow: unset;
+}
+
+#layout-principal {
+    display: grid;
+    grid-template-columns: 350px 1fr; /* Form fijo + Calendario fluido */
+    gap: 25px;
+    padding: 20px;
+    margin-top: 20px;
+    align-items: start;
+}
+
+/* FORM FIJO A LA IZQUIERDA */
+#columna-formulario {
+    position: sticky;
+    top: 90px; /* debajo del header */
+    background: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+/* CALENDARIO FIJO A LA DERECHA */
+#columna-calendario {
+    position: sticky;
+    top: 90px;
+    height: calc(100vh - 120px);
+    overflow-y: auto;
+    background: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+#columna-calendario table {
+    width: 100%;
+}
+
